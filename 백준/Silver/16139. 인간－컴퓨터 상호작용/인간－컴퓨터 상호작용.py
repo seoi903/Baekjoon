@@ -1,20 +1,14 @@
 import sys
 
-input = sys.stdin.readline
+s = sys.stdin.readline().rstrip()
+count = [[0] * 26]
 
-name = input().strip()
-n = int(input())
-arr = [[0 for i in range(26)] for i in range(len(name))]
-arr[0][ord(name[0]) - 97] = 1
-for i in range(1, len(name)):
-    arr[i][ord(name[i]) - 97] = 1
-    for j in range(26):
-        arr[i][j] += arr[i - 1][j]
-for i in range(n):
-    a = input().split()
-    if int(a[1]) > 0:
-        res = arr[int(
-            a[2])][ord(a[0]) - 97] - arr[int(a[1]) - 1][ord(a[0]) - 97]
-    else:
-        res = arr[int(a[2])][ord(a[0]) - 97]
-    print(res)
+q = int(sys.stdin.readline().rstrip())
+for i, ch in enumerate(s):
+    count.append(count[len(count) - 1][:])
+    count[i + 1][ord(ch) - 97] += 1
+
+for _ in range(q):
+    alpha, l, r = sys.stdin.readline().rstrip().split()
+    answer = count[int(r) + 1][ord(alpha) - 97] - count[int(l)][ord(alpha) - 97]
+    print(answer)
